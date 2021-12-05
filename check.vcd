@@ -2,12 +2,16 @@ $version Testing $end
 $timescale 1ns $end
 $var reg 8 ! reg1 [7:0] $end
 $var wire 1 " wire2 $end
+$var real 64 # real3 [63:0] $end
 $enddefinitions $end
 $dumpvars
 #0
 b00000000 !
 0"
+r-1 #
 #10
 b10000011 !
+r10 #
 #20
 1"
+r20 #

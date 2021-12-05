@@ -1,3 +1,4 @@
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include "vcd.h"
@@ -9,6 +10,7 @@ struct vcd
   int width;
   char id[5];
   int value;
+  double real;
 };
 
 #define VARIABLES 100
@@ -42,6 +44,20 @@ void vcd_value (long long current_time, int index, int value)
     vcd_binary (value, variable[index].width);
     fprintf (output, " %s\n", variable[index].id);
   }
+}
+
+void vcd_real (long long current_time, int index, double value)
+{
+  if (variable[index].real == value)
+    return;
+
+  if (current_time > last_time) {
+    last_time = current_time;
+    fprintf (output, "#%lld\n", current_time);
+  }
+
+  variable[index].real = value;
+  fprintf (output, "r%.16g %s\n", value, variable[index].id);
 }
 
 static void vcd_close (void)
@@ -105,6 +121,7 @@ int vcd_variable (const char *name, const char *type, int width)
   variable[index].type = type;
   variable[index].width = width;
   variable[index].value = -1;
+  variable[index].real = NAN;
   vcd_id (variable[index].id, index);
   return index++;
 }
