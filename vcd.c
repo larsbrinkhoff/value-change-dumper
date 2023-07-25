@@ -39,7 +39,7 @@ void vcd_value (long long current_time, int index, int value)
 
   variable[index].value = value;
   if (variable[index].width == 1)
-    fprintf (output, "%d%s\n", value, variable[index].id);
+    fprintf (output, "%d%s\n", !!value, variable[index].id);
   else {
     vcd_binary (value, variable[index].width);
     fprintf (output, " %s\n", variable[index].id);
